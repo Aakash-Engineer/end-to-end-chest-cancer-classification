@@ -5,7 +5,7 @@ from pathlib import Path
 # Set up logging configuration
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-PROJECT_NAME = 'Chest_classifier'
+PROJECT_NAME = 'ChestClassifier'
 LIST_OF_FILES = [
     '.github/workflows/.gitkeep',
     f'src/{PROJECT_NAME}/__init__.py',
