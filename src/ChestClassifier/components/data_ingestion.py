@@ -2,6 +2,7 @@ from ChestClassifier import logger
 import zipfile
 import gdown
 import os
+from ChestClassifier.config.configuration import DataIngestionConfig
 
 
 class DataIngestion:
