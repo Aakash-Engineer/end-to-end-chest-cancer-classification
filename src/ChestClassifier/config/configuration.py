@@ -1,8 +1,10 @@
 from ChestClassifier.constants import *
 from ChestClassifier.utils.common import read_yaml, create_directories
 import gdown
+import os
 from ChestClassifier.entity.config_entity import DataIngestionConfig
 from ChestClassifier.entity.config_entity import PrepareBaseModelConfig
+from ChestClassifier.entity.config_entity import TrainingConfig
 
 
 class ConfigurationManager:
@@ -38,4 +40,23 @@ class ConfigurationManager:
             params_include_top=self.params.INCLUDE_TOP,
             params_classes=self.params.CLASSES,
             params_weights=self.params.WEIGHTS,
+        )
+    
+    def get_trainig_config(self):
+        training = self.config.training
+        prepare_base_model = self.config.prepare_base_model
+        params = self.params
+        training_data = os.path.join(self.config.data_ingestion.unzip_dir, 'Chest-CT-Scan-data')
+        create_directories([training.root_dir])
+
+        return TrainingConfig(
+            root_dir=training.root_dir,
+            trained_model_path=training.trained_model_path,
+            updated_base_model_path=prepare_base_model.updated_base_model_path,
+            training_data=training_data,
+            params_epochs=params.EPOCHS,
+            params_batch_size=params.BATCH_SIZE,
+            params_learning_rate=params.LEARNING_RATE,
+            params_image_size=params.IMAGE_SIZE,
+            params_is_augmentation=params.AUGMENTATION
         )

@@ -1,4 +1,3 @@
-from ChestClassifier.entity.config_entity import PrepareBaseModelConfig
 from ChestClassifier.config.configuration import ConfigurationManager
 from ChestClassifier.components.prepare_base_model import PrepareBaseModel
 from ChestClassifier import logger
