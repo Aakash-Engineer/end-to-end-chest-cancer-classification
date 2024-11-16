@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chest Cancer Classification</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { margin-top: 50px; }
+        .image-part { height: 300px; width: 300px; border: 1px solid #1b2d6b; margin: 0 auto; }
+        .image-part img { height: 100%; width: 100%; display: none; }
+        .result-container { margin-top: 20px; }
+        .result-container pre { background-color: #e9ecef; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h3>Chest Cancer Classification</h3>
+        <div class="image-part">
+            <img src="" id="photo">
+            <canvas style="display:none;" id="canvas"></canvas>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary" id="upload">Upload</button>
+            <button class="btn btn-success" id="predict">Predict</button>
+            <input type="file" id="fileinput" style="display:none;">
+        </div>
+        <div id="result" class="result-container mt-3"></div>
+    </div>
+    <script>
+        var base_data = "";
+
+        function sendRequest(base64Data) {
+            if (base64Data) {
+                var url = "/predict";
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ image: base64Data })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerHTML = "<pre>" + JSON.stringify(data['image'], undefined, 2) + "</pre>";
+                })
+                .catch(error => {
+                    document.getElementById("result").innerHTML = "<pre>Error: " + JSON.stringify(error, undefined, 2) + "</pre>";
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("upload").addEventListener("click", function() {
+                document.getElementById("fileinput").click();
+            });
+
+            document.getElementById("predict").addEventListener("click", function() {
+                if (base_data) {
+                    sendRequest(base_data);
+                } else {
+                    document.getElementById("result").innerHTML = "<pre>Please upload an image first.</pre>";
+                }
+            });
+
+            document.getElementById("fileinput").addEventListener("change", function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = new Image();
+                        img.onload = function() {
+                            var canvas = document.getElementById('canvas');
+                            var ctx = canvas.getContext('2d');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            ctx.drawImage(img, 0, 0);
+                            base_data = canvas.toDataURL('image/jpeg').replace(/^data:image\/jpeg;base64,/, '');
+                            document.getElementById("photo").src = e.target.result;
+                            document.getElementById("photo").style.display = "block";
+                        };
+                        img.src = e.target.result;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
