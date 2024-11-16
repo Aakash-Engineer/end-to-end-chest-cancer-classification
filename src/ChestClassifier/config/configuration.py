@@ -5,6 +5,7 @@ import os
 from ChestClassifier.entity.config_entity import DataIngestionConfig
 from ChestClassifier.entity.config_entity import PrepareBaseModelConfig
 from ChestClassifier.entity.config_entity import TrainingConfig
+from ChestClassifier.entity.config_entity import EvaluationCinfig
 
 
 class ConfigurationManager:
@@ -59,4 +60,13 @@ class ConfigurationManager:
             params_learning_rate=params.LEARNING_RATE,
             params_image_size=params.IMAGE_SIZE,
             params_is_augmentation=params.AUGMENTATION
+        )
+    def get_evaluation_config(self) -> EvaluationCinfig:
+        return EvaluationCinfig(
+            model_path=self.config.training.trained_model_path,
+            training_data='artifacts/data_ingestion/Chest-CT-Scan-data',
+            mlflow_uri='https://dagshub.com/Aakash-Engineer/end-to-end-chest-cancer-classification.mlflow',
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE
         )
