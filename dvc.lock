@@ -32,8 +32,8 @@ stages:
       params.yaml:
         CLASSES: 2
         IMAGE_SIZE:
-        - 128
-        - 128
+        - 32
+        - 32
         - 3
         INCLUDE_TOP: false
         LEARNING_RATE: 0.001
@@ -41,8 +41,8 @@ stages:
     outs:
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 96514f496ee853e73caf36b54e37621f.dir
-      size: 117919392
+      md5: a68d521e3f44d3ae9743f8b73b41e137.dir
+      size: 117857952
       nfiles: 2
   training:
     cmd: python src/ChestClassifier/pipeline/step_3_training.py
@@ -54,8 +54,8 @@ stages:
       nfiles: 343
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 4b41799a6e1a7b3dd4bde775dba9823b.dir
-      size: 117870240
+      md5: a68d521e3f44d3ae9743f8b73b41e137.dir
+      size: 117857952
       nfiles: 2
     - path: config/config.yaml
       hash: md5
@@ -70,15 +70,15 @@ stages:
         AUGMENTATION: true
         BATCH_SIZE: 32
         IMAGE_SIZE:
-        - 64
-        - 64
+        - 32
+        - 32
         - 3
         INCLUDE_TOP: false
     outs:
     - path: artifacts/training/trained_model.h5
       hash: md5
-      md5: 89bbce0b10ecfef317c4d0efd5c98212
-      size: 58987864
+      md5: f1b19688a3e39b7aa2d0c9d5f0242527
+      size: 58951000
   evaluation:
     cmd: python src/ChestClassifier/pipeline/step_4_evaluation.py
     deps:
@@ -89,8 +89,8 @@ stages:
       nfiles: 343
     - path: artifacts/training/trained_model.h5
       hash: md5
-      md5: 89bbce0b10ecfef317c4d0efd5c98212
-      size: 58987864
+      md5: f1b19688a3e39b7aa2d0c9d5f0242527
+      size: 58951000
     - path: config/config.yaml
       hash: md5
       md5: 7b3fbed1e0385bf09b3fa5c39611a334
@@ -103,11 +103,11 @@ stages:
       params.yaml:
         BATCH_SIZE: 32
         IMAGE_SIZE:
-        - 64
-        - 64
+        - 32
+        - 32
         - 3
     outs:
     - path: scores.json
       hash: md5
-      md5: 0f8972ebec92ad6096bbb6c54dab8729
-      size: 71
+      md5: 735f50ef46475240cdd8f01a9053b002
+      size: 74
