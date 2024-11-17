@@ -32,8 +32,8 @@ stages:
       params.yaml:
         CLASSES: 2
         IMAGE_SIZE:
-        - 64
-        - 64
+        - 224
+        - 224
         - 3
         INCLUDE_TOP: false
         LEARNING_RATE: 0.01
@@ -41,8 +41,8 @@ stages:
     outs:
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 01b4913fc4456c3c1ea9d01c5058cfee.dir
-      size: 117870240
+      md5: b42ff2c30f14b9cc7d0b595319174f59.dir
+      size: 118054560
       nfiles: 2
   training:
     cmd: python src/ChestClassifier/pipeline/step_3_training.py
