@@ -10,7 +10,7 @@ class Prediction:
 
     def predict(self):
         # load model
-        model = load_model(os.path.join('artifacts', 'training', 'trained_model.h5'))
+        model = load_model(os.path.join('model', 'trained_model.h5'))
 
         image_name = self.filename
         test_image =  image.load_img(image_name, target_size = (64, 64))
